@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h2 {
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        table th {
+            background-color: #f2f2f2;
+        }
+        table img {
+            max-width: 150px;
+            height: auto;
+        }
+        a.button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+        a.button:hover {
+            background-color: #0056b3;
+        }
+        form.logout {
+            display: inline-block;
+        }
+        form.logout button {
+            padding: 10px 20px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        form.logout button:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <h2>Welcome to the Dashboard</h2>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Text 1</th>
+                <th>Text 2</th>
+                <th>Text 3</th>
+                <th>Image</th>
+                <th>Result</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for data in user_data %}
+            <tr>
+                <td>{{ data.text1 }}</td>
+                <td>{{ data.text2 }}</td>
+                <td>{{ data.text3 }}</td>
+                <td><a href="..{{ data.image.url }}"><img src="..{{ data.image.url }}"></a></td>
+                <td><a href="/media/{{ data.text_file }}">download</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <a href="{% url 'upload_data' %}" class="button">Upload New Data</a>
+    
+    <form action="{% url 'logout' %}" method="post" class="logout">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+</body>
+</html>
